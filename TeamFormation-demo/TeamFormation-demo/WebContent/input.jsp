@@ -228,11 +228,15 @@ $(document).on("click", "#mysub", function() { // When HTML DOM "click" event is
 
 	 $.get("validate", $('form#formId').serialize() , function(responseText) {   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
 
+		 
+		 
+		 
+		 console.log(responseText.length); // it's always 2 and i don't know how to change that
+		 
 		 if(responseText!='OK'){
 			//$("#tst").text(responseText);
 			//$('#tst').text("Skilled indicated by X are not among the the skill set.")
-			for ( var i = 0; i < responseText.length; i++ )
-			{	
+			for ( var i = 0; i < responseText.length; i++ ){	
 				if(responseText.charAt(i)=="0") // not there
 					$('#spn'+i).show();	
 				else
@@ -240,9 +244,12 @@ $(document).on("click", "#mysub", function() { // When HTML DOM "click" event is
 			}
          }else{
 	
-			$('#spn'+0).hide(); $('#spn'+1).hide();	
-			$('#spn'+2).hide();	$('#spn'+3).hide();	
-			$('#spn'+4).hide();	$('#spn'+5).hide();	
+			$('#spn'+0).hide();
+			$('#spn'+1).hide();	
+			$('#spn'+2).hide();	
+			$('#spn'+3).hide();	
+			$('#spn'+4).hide();	
+			$('#spn'+5).hide();	
 
             $("#formId").submit();       
          }
