@@ -7,51 +7,6 @@
 <!--<![endif]-->
 <head>
 
-<style type="text/css"> 
-.styled-button-5 {
-	background-color:#ed8223;
-	color:#fff;
-	font-family:'Helvetica Neue',sans-serif;
-	font-size:18px;
-	line-height:30px;
-	border-radius:20px;
-	-webkit-border-radius:20px;
-	-moz-border-radius:20px;
-	border:0;
-	text-shadow:#C17C3A 0 -1px 0;
-	width:120px;
-	height:32px
-} 
-.button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  border-radius:20px;
-  -webkit-border-radius:20px;
-  -moz-border-radius:20px;
-} 
-.button2:hover {
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}  
-table, th, td {
-  border-collapse: collapse;
-}     
-
-h3 {
-    height: 100%;
-    vertical-align: bottom;
-    display:table-cell;
-}
-</style>
 <!-- General Metas -->
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -67,6 +22,8 @@ h3 {
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1" />
 
+<link rel="stylesheet" href="styles/InputInfoForm.css" >
+
 <link href="jquery-ui.css" rel="stylesheet">
 
 <script>
@@ -76,8 +33,7 @@ function dis() {
   	if(x == "m3" ){ // shortest path
  	   options[1].disabled = true;
  	   options[0].selected = true;
-  	}
-  	else {
+  	} else {
   		options[1].disabled = false;  
   		options[0].selected = false;
   	}
@@ -89,15 +45,15 @@ function dis() {
 	<div>
 		<h1>RW-Team: Robust Team Formation Using Random Walk</h1>
 				
-		<p>An expert network is a social network that represents professionals and their skills. 
-		   Expert networks can be modeled as graphs whose nodes correspond to experts (labeled with their skills) 
+		<p id="BasicInfoA">An expert network is a social network that represents professionals and their skills.</p>
+		<p id="BasicInfoB">   Expert networks can be modeled as graphs whose nodes correspond to experts (labeled with their skills) 
 		   and whose edges represent past collaborations e.g., co-authoring a paper in DBLP or collaborating on 
 		   the same project in GitHub.</p>
 	</div>
 
 	<div>
 		<form action="input" method="post" id="formId">
-			<table style="width: 100%;">
+			<table style="width: 50%; margin-left: 5rem; margin-right:5rem;">
 				<col width="30%">
 				<tr >
 					<td>
@@ -230,8 +186,9 @@ $(document).on("click", "#mysub", function() { // When HTML DOM "click" event is
 
 		 
 		 
-		 
-		 console.log(responseText.length); // it's always 2 and i don't know how to change that
+		 //okay i have no idea how this works
+		 //console.log(responseText.length); // it's always 2 and i don't know how to change that
+		 console.log(responseText); //response text is "OK"
 		 
 		 if(responseText!='OK'){
 			//$("#tst").text(responseText);

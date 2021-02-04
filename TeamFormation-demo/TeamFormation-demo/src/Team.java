@@ -46,6 +46,7 @@ public class Team {
 		}
 		
 		
+		
 		Set<Integer> nodes=null;
 		
 		boolean good = false;
@@ -58,7 +59,7 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("BFS valid visualization " + good);
+				//System.out.println("BFS valid visualization " + good);
 				//System.out.println("BFS node length " + nodes.size());
 				break;
 			case 1:
@@ -70,7 +71,7 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("Pruned BFS valid visualization " + good);
+				//System.out.println("Pruned BFS valid visualization " + good);
 				//System.out.println("Pruned BFS node length " + nodes.size());
 				break;
 			case 2:
@@ -81,7 +82,7 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("Clique valid visualization " + good);
+				//System.out.println("Clique valid visualization " + good);
 				//System.out.println("Clique node length " + nodes.size());
 				break;
 			case 3: 
@@ -92,7 +93,7 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("Clique + Neighbour valid visualization " + good);
+				//System.out.println("Clique + Neighbour valid visualization " + good);
 				//System.out.println("Clique + Neighbour node length " + nodes.size());
 				break;
 			case 4://ManyPath
@@ -103,8 +104,8 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("ManyPath valid visualization " + good);
-				System.out.println("ManyPath node length " + nodes.size());
+				//System.out.println("ManyPath valid visualization " + good);
+				//System.out.println("ManyPath node length " + nodes.size());
 				break;
 			case 5://Pruned ManyPath
 				nodes = getBestPaths(neighborMap, twoHopMap, finalScoreVector);
@@ -114,8 +115,8 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("Pruned ManyPath valid visualization " + good);
-				System.out.println("Pruned ManyPath node length " + nodes.size());
+				//System.out.println("Pruned ManyPath valid visualization " + good);
+				//System.out.println("Pruned ManyPath node length " + nodes.size());
 				break;
 			case 6://AK-Master Node
 				nodes = getTreeStylePaths(neighborMap, twoHopMap, finalScoreVector);
@@ -125,8 +126,8 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("AK-Master Node valid visualization " + good);
-				System.out.println("AK-Master node length " + nodes.size());
+				//System.out.println("AK-Master Node valid visualization " + good);
+				//System.out.println("AK-Master node length " + nodes.size());
 				break;
 			case 7:// Improved Pruned BFS
 				
@@ -140,7 +141,7 @@ public class Team {
 						nodes = getTopNeighbors(nodes,finalScoreVector, nodeCount);
 					}
 				}
-				System.out.println("Improved Pruned BFS node length " + nodeCount);
+				//System.out.println("Improved Pruned BFS node length " + nodeCount);
 				break;
 		}
 		
@@ -305,7 +306,6 @@ public class Team {
  		return false;
  	}
 	
-	// create network by ID
 	public void setNetwork1(Set<Integer> nodes, int [] expertIds, Map<Integer, Set<Integer>> neighborMap){
 		
 		StringBuilder r = new StringBuilder("graph { size = 15 ;node [fixedsize=false margin=0.01 fontcolor=blue fontsize=10 width = 0 height = 0];");
@@ -359,7 +359,7 @@ public class Team {
 			
 		}
 		
-		System.out.println("Score Sum " + scoreSum);
+		//System.out.println("Score Sum " + scoreSum);
 		
 		int i = 0;
 		
@@ -383,11 +383,11 @@ public class Team {
 			i ++;
 		}
 		
-		System.out.println("Stat Dev: " + getSD(normScores));
+		//System.out.println("Stat Dev: " + getSD(normScores));
 		
-		System.out.println("Average Score: " + (modScoreSum / normScores.length));
+		//System.out.println("Average Score: " + (modScoreSum / normScores.length));
 		
-		System.out.println("Max Score: " + maxScore);
+		//System.out.println("Max Score: " + maxScore);
 		
 		if(maxScore > ( (modScoreSum / normScores.length) + (getSD(normScores) * 3))) {
 		
@@ -425,7 +425,6 @@ public class Team {
 		network = r.toString();
 	}
 	
-	// create network by name
 	public void setNetwork2(Set<Integer> nodes, int [] expertIds, Map<Integer, Set<Integer>> neighborMap, String[] experts, DoubleMatrix2D finalScoreVector){
 		
 		double[] normScores = new double[nodes.size()];
@@ -437,7 +436,7 @@ public class Team {
 			
 		}
 		
-		System.out.println("Score Sum " + scoreSum);
+		//System.out.println("Score Sum " + scoreSum);
 		
 		int i = 0;
 		
@@ -461,11 +460,11 @@ public class Team {
 			i ++;
 		}
 		
-		System.out.println("Stat Dev: " + getSD(normScores));
+		//System.out.println("Stat Dev: " + getSD(normScores));
 		
-		System.out.println("Average Score: " + (modScoreSum / normScores.length));
+		//System.out.println("Average Score: " + (modScoreSum / normScores.length));
 		
-		System.out.println("Max Score: " + maxScore);
+		//System.out.println("Max Score: " + maxScore);
 		
 		if(maxScore > ( (modScoreSum / normScores.length) + (getSD(normScores) * 3))) {
 		

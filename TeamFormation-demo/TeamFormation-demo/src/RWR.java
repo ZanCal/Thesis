@@ -126,8 +126,8 @@ public class RWR {
         Map<Integer,Set<Integer>> graphMap = new HashMap<Integer,Set<Integer>>();
 
         String sCurrentLine;
-        try
-        {
+        try{
+        	
             BufferedReader br = new BufferedReader(new FileReader(graphFile));
             while ((sCurrentLine = br.readLine()) != null) {
 
@@ -137,8 +137,8 @@ public class RWR {
 
                 Set<Integer> neighbors = new HashSet<Integer>();
 
-                for(int i=1; i<ss.length; i++)
-                {
+                for(int i=1; i<ss.length; i++){
+                	
                     //we assume the graph is unweighted and therefore ignore the weight
                     String[] tt = ss[i].split("#");
                     neighbors.add(Integer.parseInt(tt[0]));
@@ -149,10 +149,10 @@ public class RWR {
             int nodesNum = graphMap.size();
             M = new SparseDoubleMatrix2D(nodesNum,nodesNum);
 
-            for(int nodeId : graphMap.keySet())
-            {
-                for(int neighbourId : graphMap.get(nodeId))
-                {
+            for(int nodeId : graphMap.keySet()){
+            	
+                for(int neighbourId : graphMap.get(nodeId)){
+                	
                     double rowSum = graphMap.get(nodeId).size();
                     double value = (1/rowSum);
                     value = value*beta;
@@ -172,8 +172,7 @@ public class RWR {
     }
 
     public DoubleMatrix2D RandomRandomWalkRestart(
-            List<Integer> restartList, DoubleMatrix2D M, double beta, int RWR_RunNum)
-    {
+            List<Integer> restartList, DoubleMatrix2D M, double beta, int RWR_RunNum){
         //Creating 0.2(NxN) matrix on the basis of values in restList
         DoubleMatrix2D RWR_M = M.copy();
         int nodeNum = RWR_M.rows();
@@ -193,8 +192,7 @@ public class RWR {
 
         DoubleMatrix2D scoreVector = new SparseDoubleMatrix2D(nodeNum,1);
         double valueV1 = 1.0/nodeNum;
-        for(int i=0; i<nodeNum; i++)
-        {
+        for(int i=0; i<nodeNum; i++){
             scoreVector.set(i,0,valueV1);
         }
 
@@ -209,18 +207,15 @@ public class RWR {
 
     //--------------------------------------------------------------------------------------------------------
     public Map<String, Integer> buildRWRTeam(
-            Set<String> project, Map<String, Set<Integer>> skillExpertMap, DoubleMatrix2D M, double beta, int RWR_RunNum)
-    {
+            Set<String> project, Map<String, Set<Integer>> skillExpertMap, DoubleMatrix2D M, double beta, int RWR_RunNum){
+    	//what is M used for?
         //Find the skill with minimum cardinality in the project (skillMinCard)
         String skillMinCard = null;
-        for (String skill : project)
-        {
-            if (skillMinCard == null )
-            {
+        for (String skill : project){
+            if (skillMinCard == null ){
                 skillMinCard = skill;
             }
-            if(skillExpertMap.get(skill).size() < skillExpertMap.get(skillMinCard).size())
-            {
+            if(skillExpertMap.get(skill).size() < skillExpertMap.get(skillMinCard).size()){
                 skillMinCard=skill;
             }
         }
@@ -259,6 +254,7 @@ public class RWR {
                     for(int expertId : skillExpertMap.get(skill)  ) {
                         double expert_score = scoreVector.get(expertId, 0);  // get the score of expert have the "skill"
                         if(expert_score > max_expert_score) {
+                        	
                             max_expert_score = expert_score;
                             selected_expert = expertId;
                         }
@@ -278,20 +274,83 @@ public class RWR {
     }
 
    //------------------------------------------------------------------------------------------------------------
-
-    public Map<String, Integer> buildFASTRWRTeam(
-            Set<String> project, Map<String, Set<Integer>> skillExpertMap, DoubleMatrix2D M, double beta, int RWR_RunNum)
-    {
-        //Find the skill with minimum cardinality
+    public Map<String, Integer> buildRWRTeam(
+            Set<String> project, Map<String, Set<Integer>> skillExpertMap, DoubleMatrix2D M, double beta, int RWR_RunNum, Set<Integer> usedIds){
+    	//what is M used for?
+        //Find the skill with minimum cardinality in the project (skillMinCard)
         String skillMinCard = null;
-        for (String skill : project)
-        {
-            if (skillMinCard == null )
-            {
+        for (String skill : project){
+            if (skillMinCard == null ){
                 skillMinCard = skill;
             }
-            if(skillExpertMap.get(skill).size() < skillExpertMap.get(skillMinCard).size())
-            {
+            if(skillExpertMap.get(skill).size() < skillExpertMap.get(skillMinCard).size()){
+                skillMinCard=skill;
+            }
+        }
+
+        
+        double maxScore = Double.MIN_VALUE;
+        Map<String, Integer> bestTeam = null;
+
+        // start team with experts who have skillMinCard as a skill
+        for(int micCardExpertId : skillExpertMap.get(skillMinCard)) {
+
+            Map<String, Integer> team = new HashMap<String, Integer>();
+            double score = 0;
+            
+            // initialize team with an expert with minimum skill   
+            team.put(skillMinCard, micCardExpertId);
+
+            // go and find the other skills in the project
+            for(String skill : project) {
+                if(!skill.equals(skillMinCard)) {
+                	
+                	// restartlist is updated to reflect updated team  
+                    List<Integer> restartList = new ArrayList<Integer>();
+                    for(String coveredSkill : team.keySet()) {
+                        restartList.add(team.get(coveredSkill));  // get the members that cover  skills
+                    }
+
+                    //scoreVector stores the importance of each node (all nodes for the team mmebers)
+                    DoubleMatrix2D scoreVector = RandomRandomWalkRestart(restartList, M, beta, RWR_RunNum);
+
+                    finalScoreVector = scoreVector;
+                    
+                    double max_expert_score = -1;
+                    int selected_expert = -1;
+                    
+                    // check all expert have the skill and check their score 
+                    for(int expertId : skillExpertMap.get(skill)  ) {
+                        double expert_score = scoreVector.get(expertId, 0);  // get the score of expert have the "skill"
+                        if((expert_score > max_expert_score) && (usedIds.contains(expertId) == false)) {
+                        	
+                            max_expert_score = expert_score;
+                            selected_expert = expertId;
+                        }
+                    } 
+                    team.put(skill, selected_expert);
+                    score += max_expert_score;
+                }
+            }
+
+            if(score > maxScore) {
+                maxScore = score;
+                bestTeam = team;
+            }
+        }
+        return bestTeam;
+    }
+
+
+    public Map<String, Integer> buildFASTRWRTeam(
+            Set<String> project, Map<String, Set<Integer>> skillExpertMap, DoubleMatrix2D M, double beta, int RWR_RunNum){
+        //Find the skill with minimum cardinality
+        String skillMinCard = null;
+        for (String skill : project){
+            if (skillMinCard == null ){
+                skillMinCard = skill;
+            }
+            if(skillExpertMap.get(skill).size() < skillExpertMap.get(skillMinCard).size()){
                 skillMinCard=skill;
             }
         }
@@ -341,5 +400,61 @@ public class RWR {
         return bestTeam;
     }
 
+    public Map<String, Integer> buildFASTRWRTeam(
+            Set<String> project, Map<String, Set<Integer>> skillExpertMap, DoubleMatrix2D M, double beta, int RWR_RunNum, Set<Integer> usedIds){
+        //Find the skill with minimum cardinality
+        String skillMinCard = null;
+        for (String skill : project){
+            if (skillMinCard == null ){
+                skillMinCard = skill;
+            }
+            if(skillExpertMap.get(skill).size() < skillExpertMap.get(skillMinCard).size()){
+                skillMinCard=skill;
+            }
+        }
 
+        double maxScore = Double.MIN_VALUE;
+        Map<String, Integer> bestTeam = null;
+
+        for(int micCardExpertId : skillExpertMap.get(skillMinCard)) {
+
+            Map<String, Integer> team = new HashMap<String, Integer>();
+            double score = 0;
+
+            team.put(skillMinCard, micCardExpertId);
+
+            ArrayList<Integer> restartList = new ArrayList<Integer>();
+            restartList.add(micCardExpertId);
+
+            //scoreVector stores the importance of each node
+            DoubleMatrix2D scoreVector = RandomRandomWalkRestart(restartList, M, beta, RWR_RunNum);
+
+            finalScoreVector = scoreVector;
+            
+            for(String skill : project) {
+                if(!skill.equals(skillMinCard)) {
+
+                    double max_expert_score = -1;
+                    int selected_expert = -1;
+
+                    for(int expertId : skillExpertMap.get(skill)  ) {
+                        double expert_score = scoreVector.get(expertId, 0);
+                        if((expert_score > max_expert_score) && (usedIds.contains(expertId) == false)) {
+                            max_expert_score = expert_score;
+                            selected_expert = expertId;
+                        }
+                    }
+
+                    team.put(skill, selected_expert);
+                    score += max_expert_score;
+                }
+            }
+
+            if(score > maxScore) {
+                maxScore = score;
+                bestTeam = team;
+            }
+        }
+        return bestTeam;
+    }
 }
