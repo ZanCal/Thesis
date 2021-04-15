@@ -46,9 +46,10 @@ public class Team {
 		}
 		
 		
+		
 		Set<Integer> nodes=null;
 		
-		boolean good = false;
+		boolean good;
 		switch(prtype){
 			case 0:
 				nodes= getlocalNodes(neighborMap);		//BFS
@@ -58,8 +59,8 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("BFS valid visualization " + good);
-				//System.out.println("BFS node length " + nodes.size());
+				//System.out.println("BFS valid visualization " + good);
+				System.out.println("BFS node length " + nodes.size());
 				break;
 			case 1:
 				nodes= getlocalNodes(neighborMap);	// BFS
@@ -70,7 +71,7 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("Pruned BFS valid visualization " + good);
+				//System.out.println("Pruned BFS valid visualization " + good);
 				//System.out.println("Pruned BFS node length " + nodes.size());
 				break;
 			case 2:
@@ -81,8 +82,8 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("Clique valid visualization " + good);
-				//System.out.println("Clique node length " + nodes.size());
+				//System.out.println("Clique valid visualization " + good);
+				System.out.println("Clique node length " + nodes.size());
 				break;
 			case 3: 
 				nodes = CreatExtSpGraph(twoHopMap,neighborMap); // Clique + Neighbor
@@ -92,11 +93,14 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("Clique + Neighbour valid visualization " + good);
+				//System.out.println("Clique + Neighbour valid visualization " + good);
 				//System.out.println("Clique + Neighbour node length " + nodes.size());
 				break;
 			case 4://ManyPath
-				nodes = getAllPaths(neighborMap, twoHopMap, finalScoreVector);
+				//here we go, moment of truth 
+				//nodes = getAllPaths(neighborMap, twoHopMap, finalScoreVector);
+				
+				nodes = CreateWSPGraph(twoHopMap, finalScoreVector);
 				good = true;
 				for(i = 1; i < expertIds.length; i ++) {
 					if(!inSameGraph(expertIds[0],expertIds[i],nodes,neighborMap)) {
@@ -114,8 +118,8 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("Pruned ManyPath valid visualization " + good);
-				System.out.println("Pruned ManyPath node length " + nodes.size());
+				//System.out.println("Pruned ManyPath valid visualization " + good);
+				//System.out.println("Pruned ManyPath node length " + nodes.size());
 				break;
 			case 6://AK-Master Node
 				nodes = getTreeStylePaths(neighborMap, twoHopMap, finalScoreVector);
@@ -125,8 +129,8 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("AK-Master Node valid visualization " + good);
-				System.out.println("AK-Master node length " + nodes.size());
+				//System.out.println("AK-Master Node valid visualization " + good);
+				//System.out.println("AK-Master node length " + nodes.size());
 				break;
 			case 7:// Improved Pruned BFS
 				
@@ -140,7 +144,7 @@ public class Team {
 						nodes = getTopNeighbors(nodes,finalScoreVector, nodeCount);
 					}
 				}
-				System.out.println("Improved Pruned BFS node length " + nodeCount);
+				//System.out.println("Improved Pruned BFS node length " + nodeCount);
 				break;
 		}
 		
@@ -175,11 +179,13 @@ public class Team {
 		
 		Set<Integer> result = new HashSet<Integer>();
 		
-		for(int j = 0 ; j < expertIds.length; j++)
-			result.add(expertIds[j]);
+		for(int j = 0 ; j < expertIds.length; j++) {
+			result.add(expertIds[j]);			
+		}
 		
-		for (int j = 0; j < k && j < nodes.size() ;j++)
-			result.add(idx[j]);
+		for (int j = 0; j < k && j < nodes.size() ;j++) {
+			result.add(idx[j]);			
+		}
 			
 		return result;
 	}
@@ -190,10 +196,12 @@ public class Team {
 	//is making me want to not exist 
 		for (int i = 0; i < arr.length - 1; i++){
             int index = i;
-            for (int j = i + 1; j < arr.length; j++)
-                if (arr[j] > arr[index]) 
-                    index = j;
-      
+            for (int j = i + 1; j < arr.length; j++) {            	
+                if (arr[j] > arr[index]) {
+                	index = j;                	
+                }
+            }
+            
             double t = arr[index];       
             arr[index] = arr[i];            
             arr[i] = t; 
@@ -228,10 +236,31 @@ public class Team {
 				//System.out.println(expertIds[i]);
 				//System.out.println(expertIds[j]);
 				//System.out.println(path);
-				//System.out.println("new path");
-	            for(Integer id:path)
-	            	nodes.add(id);
+				//System.out.println("new path clique");
+	            for(Integer id:path) {
+	            	nodes.add(id);	            	
+	            }
 		}
+		
+		return nodes;
+	}
+	
+	
+	private Set<Integer> CreateWSPGraph(Map<Integer, TwoHop[]> twoHopMap, DoubleMatrix2D finalScoreVector ){
+		TestOne util = new TestOne();
+		Set<Integer> nodes = new HashSet<Integer>();
+		List<Integer> path;
+		for(int i = 0; i < expertIds.length; i ++) {
+			for(int j = 0; j < expertIds.length; j++) {
+				path = util.weightedVariant(twoHopMap, expertIds[i], expertIds[j], null, finalScoreVector, -1, -1 );
+				
+				for(Integer id:path) {
+					nodes.add(id);
+				}
+			}
+			
+		}
+		
 		
 		return nodes;
 	}
@@ -305,7 +334,6 @@ public class Team {
  		return false;
  	}
 	
-	// create network by ID
 	public void setNetwork1(Set<Integer> nodes, int [] expertIds, Map<Integer, Set<Integer>> neighborMap){
 		
 		StringBuilder r = new StringBuilder("graph { size = 15 ;node [fixedsize=false margin=0.01 fontcolor=blue fontsize=10 width = 0 height = 0];");
@@ -425,7 +453,6 @@ public class Team {
 		network = r.toString();
 	}
 	
-	// create network by name
 	public void setNetwork2(Set<Integer> nodes, int [] expertIds, Map<Integer, Set<Integer>> neighborMap, String[] experts, DoubleMatrix2D finalScoreVector){
 		
 		double[] normScores = new double[nodes.size()];
@@ -437,7 +464,7 @@ public class Team {
 			
 		}
 		
-		System.out.println("Score Sum " + scoreSum);
+		//System.out.println("Score Sum " + scoreSum);
 		
 		int i = 0;
 		
@@ -461,11 +488,11 @@ public class Team {
 			i ++;
 		}
 		
-		System.out.println("Stat Dev: " + getSD(normScores));
+		//System.out.println("Stat Dev: " + getSD(normScores));
 		
-		System.out.println("Average Score: " + (modScoreSum / normScores.length));
+		//System.out.println("Average Score: " + (modScoreSum / normScores.length));
 		
-		System.out.println("Max Score: " + maxScore);
+		//System.out.println("Max Score: " + maxScore);
 		
 		if(maxScore > ( (modScoreSum / normScores.length) + (getSD(normScores) * 3))) {
 		
@@ -744,6 +771,17 @@ public class Team {
  	
 	public Set<Integer> getAllPaths(Map<Integer, Set<Integer>> neighbourMap,Map<Integer, TwoHop[]> twoHopMap, DoubleMatrix2D finalScoreVector){
 		
+		/*
+		 * I'm having an issue where way too many nodes are added to the team display 
+		 * 
+		 * The total number of nodes included in this display should be close to the number of nodes included in the clique display
+		 * 
+		 * I think the issue may be with my dijkstraPath algorithm implementation 
+		 * 
+		 * createSpGraph is what the clique technique uses, perhaps that would be a good starting point on reworking my manyPath
+		 * 
+		 * */
+		
 		Set<Integer> nodes = new HashSet<Integer>();
 		
 		Set<Integer> AKnodes = new HashSet<Integer>();
@@ -874,13 +912,7 @@ public class Team {
 	@SuppressWarnings("unchecked")
 	public Stack dijkstraPath(int startNode, int destNode, Map<Integer, Set<Integer>> neighbourMap, Map<Integer, Double> scoreMap) {
 		/*
-		 * I have: Starting Node, Ending Node, Node connections, Node Scores. 
-		 * 
-		 * I want: Shortest Weighted Path between Starting Node and Ending Node
-		 * 
-		 * To do that: Dijkstra's algorithm 
-		 * 
-		 * I am: a dumbass
+		 * This seems to currently be adding way too many nodes. It should be adding a number of nodes similar to that of CreateSpGraph
 		 * 
 		 * */
 		
@@ -890,8 +922,6 @@ public class Team {
 			unvisitedNodes.add(key);
 			
 		}
-		
-		
 		
 		Map<Integer, Double> weight = new HashMap<Integer, Double>();
 		Map<Integer, Stack> path = new HashMap<Integer, Stack>();
@@ -952,7 +982,13 @@ public class Team {
 			
 		}
 		
-		return new Stack();
+		Stack ret = new Stack();
+		
+		ret.push(startNode);
+		ret.push(destNode);
+		ret.push(1.0);
+		
+		return ret;
 		
 		
 	}

@@ -7,51 +7,6 @@
 <!--<![endif]-->
 <head>
 
-<style type="text/css"> 
-.styled-button-5 {
-	background-color:#ed8223;
-	color:#fff;
-	font-family:'Helvetica Neue',sans-serif;
-	font-size:18px;
-	line-height:30px;
-	border-radius:20px;
-	-webkit-border-radius:20px;
-	-moz-border-radius:20px;
-	border:0;
-	text-shadow:#C17C3A 0 -1px 0;
-	width:120px;
-	height:32px
-} 
-.button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  border-radius:20px;
-  -webkit-border-radius:20px;
-  -moz-border-radius:20px;
-} 
-.button2:hover {
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}  
-table, th, td {
-  border-collapse: collapse;
-}     
-
-h3 {
-    height: 100%;
-    vertical-align: bottom;
-    display:table-cell;
-}
-</style>
 <!-- General Metas -->
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -67,6 +22,8 @@ h3 {
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1" />
 
+<link rel="stylesheet" href="styles/InputInfoForm.css" >
+
 <link href="jquery-ui.css" rel="stylesheet">
 
 <script>
@@ -81,44 +38,55 @@ function dis() {
   		options[0].selected = false;
   	}
 }
+
 </script>
 </head>
 
 <body>
-	<div>
+	<div id ='header'>
 		<h1>RW-Team: Robust Team Formation Using Random Walk</h1>
 				
-		<p>An expert network is a social network that represents professionals and their skills. 
-		   Expert networks can be modeled as graphs whose nodes correspond to experts (labeled with their skills) 
+		<p id="BasicInfo">An expert network is a social network that represents professionals and their skills.
+		Expert networks can be modeled as graphs whose nodes correspond to experts (labeled with their skills) 
 		   and whose edges represent past collaborations e.g., co-authoring a paper in DBLP or collaborating on 
 		   the same project in GitHub.</p>
 	</div>
 
 	<div>
 		<form action="input" method="post" id="formId">
-			<table style="width: 100%;">
+			<table style="width: 100%; ">
 				<col width="30%">
-				<tr >
+				<tr id = 'expertNetwork'>
 					<td>
 						<h3> Expert Network:</h3>
 						<br>
 					</td>
 					<td valign=top>
-					    <select name="net" id="netid" style="width:210px;">
+					    <select name="net" id="netid" style="width:250px;">
 							<option value="net1"> DBLP Expert Network</option>
 							<option value="net2"> GitHub Expert Network</option>
 					    </select>
 					    <br><br>
 				   </td>
 				</tr>
-				<tr>
+				<tr id = 'projectSkillNeeds'>
 					<td align="left" valign=top>
 						<h3>Project Skill Needs:</h3>
 					</td>
 					<td align="left">
-					
-					<input type="radio" name="prj"  value="prj1" checked onclick="document.getElementById('pnid').disabled = false;
-					document.getElementById('sampleid').disabled = true;" > 
+					<input id='radio1' type="radio" name="prj"  value="prj2"  onclick="document.getElementById('pnid').disabled = true; document.getElementById('sampleid').disabled = false;"  > 
+  					Select the Skill from Samples:<br><br>
+  					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  					
+  					<select name="sample" id="sampleid"  disabled>
+							<option selected="selected" value="0">Sample 0 </option>
+							<option value="1">Sample 1</option>
+							<option value="2">Sample 2</option>
+							<option value="3">Sample 3</option>
+						    <option value="4">Sample 4</option>
+						    <option value="5">Sample 5</option>			
+					</select> <br><br>	
+					<input id = 'radio2' type="radio" name="prj"  value="prj1" checked onclick="document.getElementById('pnid').disabled = false; document.getElementById('sampleid').disabled = true;"> 
 					Select the Arbitrary Skills: <br>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					Choose Number of Skills: &nbsp;&nbsp;
@@ -131,24 +99,38 @@ function dis() {
 					</select> <br><br>
 					<div id="skills"> </div>
   					<br>
-  					<input type="radio" name="prj"  value="prj2" onclick="document.getElementById('pnid').disabled = true;
-					document.getElementById('sampleid').disabled = false;" > 
-  					Select the Skill from Samples:<br><br>
-  					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
   					
-  					<select name="sample" id="sampleid" style="width:150px;" disabled>
-							<option value="0">Sample 0 </option>
-							<option value="1">Sample 1</option>
-							<option value="2">Sample 2</option>
-							<option value="3">Sample 3</option>
-						    <option value="4">Sample 4</option>
-						    <option value="5">Sample 5</option>			
-					</select> <br><br>	
+					</td>
+				</tr>
+				<tr id = 'kTeams'>
+					<td align="left" valign=top>
+						<h3>Display Top-K teams: </h3>
+					</td>
+					<td>
+						<select name="K-Selection" id="K-Selection"  > 
+							<option value="1">1 Team </option>
+							<option value="3">3 Teams</option>
+							<option value="5">5 Teams</option>
+						</select>
+					</td>
+				</tr>
+				<tr id = 'teamGenMethod'>
+					<td align="left" valign=top>
+						<h3>Team Generation Method: </h3>
+					</td>
+					<td>
+						<select name="teamMethodSelection" id = "teamMethodSelection">
+							<option value = "f">Fast Random Walkers with Restart</option>
+							<option value = "r">Random Walkers with Restart </option>
+							<option value = "s">Shortest Path</option>
+							<option value = "e">Embedding</option>
+							<!--<option value = "h">Hybrid Shortest Path and Random Walkers with Reset</option>-->
+						</select>
 					</td>
 				</tr>
 			</table>
 			<br>
-			<div style="text-align:center; width: 50%;">  
+			<div style="text-align:center; width: 100%;">  
 			 <!--  button type="submit" class="button button2" value="true" name="loginbutt" > Discover Team</button-->
 			 <!--  lol butt -->								
 			  <input type='button' class="button button2" id = "mysub" value=' Discover Team'>
@@ -182,6 +164,8 @@ function dis() {
 </script> 
  
 <script>
+
+
 $('input[type=radio][name=prj]').change(function() {
     if (this.value == 'prj1') {
     	
@@ -213,48 +197,118 @@ $('#appid').on('selectmenuchange', function() {
         $("#presentid").selectmenu("refresh");
 	}
 });
-$('#pnid').on('selectmenuchange', function() {
-	    $('#skills').empty();
-        var text = '<input type="text" name="skill#" value="" />';
-        var text2 = '<span id="spn#" style="color:red;font-weight:bold">X (Not exist)</span><br/>';
-        for (var i = 0; i < parseInt($(this).find('option:selected').val()); i++) {
-            $('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(i+1)+' : ' +text.replace('#', i)+text2.replace('#', i));
-            $('#spn'+i).hide();
-        }
+$('#sampleid').on('selectmenuchange', function(){
+	$('#skills').empty();
+    var text2 = '<span id="spn#" style="color:red;font-weight:bold">X (Not exist)</span><br/>';
+    let selection = parseInt($(this).find('option:selected').val())
+	let textA = '<input type="text" name="skill#" value="" disabled />';
+	let textB = '<input type="text" name="skill#" value="" disabled />';
+	let textC = '<input type="text" name="skill#" value="" disabled />';
+
+    switch(selection){
+    case 0:
+    	textA = '<input type="text" name="skill#" value="expressive" disabled />';
+    	textB = '<input type="text" name="skill#" value="reformulation"  disabled/>';
+        
+		$('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(1)+' : ' +textA.replace('#', 0)+text2.replace('#', 0));
+    	$('#spn'+0).hide();
+        $('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(2)+' : ' +textB.replace('#', 1)+text2.replace('#', 1));
+        $('#spn'+1).hide();
+    	break;
+    case 1:
+    	textA = '<input type="text" name="skill#" value="bioinformatics" disabled />';
+    	textB = '<input type="text" name="skill#" value="tensor" disabled />';
+        
+    	$('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(1)+' : ' +textA.replace('#', 0)+text2.replace('#', 0));
+    	$('#spn'+0).hide();
+        $('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(2)+' : ' +textB.replace('#', 1)+text2.replace('#', 1));
+        $('#spn'+1).hide();
+    	break;
+    case 2:
+    	textA = '<input type="text" name="skill#" value="enhancing" disabled />';
+    	textB = '<input type="text" name="skill#" value="snapshot" disabled />';
+        
+    	$('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(1)+' : ' +textA.replace('#', 0)+text2.replace('#', 0));
+    	$('#spn'+0).hide();
+        $('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(2)+' : ' +textB.replace('#', 1)+text2.replace('#', 1));
+        $('#spn'+1).hide();
+    	break;
+    case 3:
+    	textA = '<input type="text" name="skill#" value="expressive" disabled />';
+    	textB = '<input type="text" name="skill#" value="embedding" disabled />';
+        
+    	$('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(1)+' : ' +textA.replace('#', 0)+text2.replace('#', 0));
+    	$('#spn'+0).hide();
+        $('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(2)+' : ' +textB.replace('#', 1)+text2.replace('#', 1));
+        $('#spn'+1).hide();
+    	break;
+    case 4:
+    	textA = '<input type="text" name="skill#" value="reformulation" disabled />';
+    	textB = '<input type="text" name="skill#" value="autonomous" disabled />';
+        
+    	$('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(1)+' : ' +textA.replace('#', 0)+text2.replace('#', 0));
+    	$('#spn'+0).hide();
+        $('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(2)+' : ' +textB.replace('#', 1)+text2.replace('#', 1));
+        $('#spn'+1).hide();
+    	break;
+    case 5:
+    	textA = '<input type="text" name="skill#" value="bioinformatics" disabled />';
+    	textB = '<input type="text" name="skill#" value="autonomous" disabled />';
+    	textC = '<input type="text" name="skill#" value="embedding" disabled />';
+        
+    	$('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(1)+' : ' +textA.replace('#', 0)+text2.replace('#', 0));
+    	$('#spn'+0).hide();
+        $('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(2)+' : ' +textB.replace('#', 1)+text2.replace('#', 1));
+        $('#spn'+1).hide();
+        $('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(3)+' : ' +textC.replace('#', 2)+text2.replace('#', 2));
+        $('#spn'+2).hide();
+    	break;
+    }
 });
+$('#pnid').on('selectmenuchange', function() {
+	$('#skills').empty();
+    var text = '<input type="text" name="skill#" value="" />';
+    var text2 = '<span id="spn#" style="color:red;font-weight:bold">X (Not exist)</span><br/>';
+    for (var i = 0; i < parseInt($(this).find('option:selected').val()); i++) {
+    	$('#skills').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skill '+(i+1)+' : ' +text.replace('#', i)+text2.replace('#', i));
+        $('#spn'+i).hide();
+	}
+});
+
 
 $(document).on("click", "#mysub", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
 
-	 $.get("validate", $('form#formId').serialize() , function(responseText) {   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
-
+	if( (document.getElementById('sampleid').disabled == true) && (document.getElementById('radio1').checked)){
+		console.log('null error condition')
+		document.getElementById('sampleid').disabled = false;
+		
+	}
+		
+	 	$.get("validate", $('form#formId').serialize() , function(responseText) {   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+			console.log(responseText); //response text is "OK"
 		 
-		 
-		 
-		 console.log(responseText.length); // it's always 2 and i don't know how to change that
-		 
-		 if(responseText!='OK'){
-			//$("#tst").text(responseText);
-			//$('#tst').text("Skilled indicated by X are not among the the skill set.")
-			for ( var i = 0; i < responseText.length; i++ ){	
-				if(responseText.charAt(i)=="0") // not there
-					$('#spn'+i).show();	
-				else
-					$('#spn'+i).hide();	
-			}
-         }else{
+			if(responseText!='OK'){
+				for ( var i = 0; i < responseText.length; i++ ){	
+					if(responseText.charAt(i)=="0") // not there
+						$('#spn'+i).show();	
+					else
+						$('#spn'+i).hide();	
+				}
+        	}else{
+				$('#spn'+0).hide();
+				$('#spn'+1).hide();	
+				$('#spn'+2).hide();	
+				$('#spn'+3).hide();	
+				$('#spn'+4).hide();	
+				$('#spn'+5).hide();	
+            	$("#formId").submit();       
+        	}
+    	});
 	
-			$('#spn'+0).hide();
-			$('#spn'+1).hide();	
-			$('#spn'+2).hide();	
-			$('#spn'+3).hide();	
-			$('#spn'+4).hide();	
-			$('#spn'+5).hide();	
-
-            $("#formId").submit();       
-         }
-        	 
-     });
 });
+</script>
+<script>
+
 </script>
 <script >
 var s = 'some#multi#word#string'.replace(/\#/g, 1);

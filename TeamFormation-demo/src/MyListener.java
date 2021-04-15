@@ -43,6 +43,8 @@ public class MyListener implements ServletContextListener {
   
         RWR rwr = new RWR();  
         
+        SmallestEmbedding emb = new SmallestEmbedding();
+        
         ShortestPath sp = new ShortestPath();
                 
         Map<String, Set<Integer>> skillExpertMap =
@@ -63,6 +65,7 @@ public class MyListener implements ServletContextListener {
         sc.setAttribute("neighborMap", neighborMap);
         sc.setAttribute("experts", experts);
         sc.setAttribute("rwr", rwr);         
+        sc.setAttribute("emb", emb);
         sc.setAttribute("sp", sp); 
         sc.setAttribute("skillExpertMap", skillExpertMap);
         sc.setAttribute("M", M);

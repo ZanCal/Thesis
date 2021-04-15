@@ -6,7 +6,7 @@ import java.io.*;
 /**
  * Created by karga on 12/2/2017.
  */
-public class ShortestPath {
+public class ShortestPath extends TeamGenerationMethod {
 
     public static double MaxCalDouble = 100000;
 
@@ -69,6 +69,65 @@ public class ShortestPath {
         return bestTeam;
     }
 
+    public Map<String, Integer> buildShortestPathTeam(
+            Set<String> project, Map<String, Set<Integer>> skillExpertMap, Map<Integer, TwoHop[]> twoHopMap, Set<Integer> usedIds){
+
+        Map<String, Integer> bestTeam = new HashMap<String, Integer>();
+        double leastWeight = Double.MAX_VALUE;
+
+        String minSkill = null;
+        for (String skill : project){
+            if (minSkill == null ){
+                minSkill = skill;
+            }
+            if(skillExpertMap.get(skill).size() < skillExpertMap.get(minSkill).size()){
+                minSkill=skill;
+            }
+        }
+        Set<Integer> potentialRootIdList = skillExpertMap.get(minSkill);
+
+        for (int rootId : potentialRootIdList) {
+
+            Map<String, Integer> team = new HashMap<String, Integer>();
+            double weight = 0;
+            team.put(minSkill, rootId);
+
+            for(String skill : project) {
+
+                if(!minSkill.equals(skill)) {
+                    double shortestDistValue = Double.MAX_EXPONENT;
+                    int bestExpert = -1;
+
+                    for (int expertId : skillExpertMap.get(skill)) {
+
+                        double dist = queryTwoHopArray(twoHopMap, expertId, rootId);
+
+                        if (dist < MaxCalDouble) {
+                            if ((dist < shortestDistValue) && (usedIds.contains(expertId) == false)) {
+                                shortestDistValue = dist;
+                                bestExpert = expertId;
+                            }
+                        }
+                    }
+
+                    if (bestExpert != -1) {
+                        team.put(skill, bestExpert);
+                        weight += shortestDistValue;
+                    }
+                }
+            }
+
+            if(team.size() == project.size()){
+                if(weight < leastWeight) {
+                    leastWeight = weight;
+                    bestTeam = team;
+                }
+            }
+        }
+
+        return bestTeam;
+    }
+    
     public double queryTwoHopArray(Map<Integer, TwoHop[]> twoHopMap, int sId, int tId){
 
         double resultDist = MaxCalDouble;

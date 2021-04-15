@@ -109,6 +109,9 @@ public class Validate extends HttpServlet {
 	    	response.getWriter().write(res.toString());       // Write response body.
 	    else
 	    	response.getWriter().write("OK");
+	    
+	    //this may be why only the first 2 skills are ever checked for validity 
+	    //shouldn't it just be response.getWriter().write(res.toString()); ?
 	}
 
 	private boolean isSkill(String skill, Set<String> eligibleSkillsSet) {

@@ -6,12 +6,11 @@ import java.io.*;
 /**
  * Created by karga on 12/2/2017.
  */
-public class SmallestEmbedding {
+public class SmallestEmbedding extends TeamGenerationMethod {
 
     public static double MaxCalDouble = 100000;
 
-    public Map<String, Integer> buildEMBTeam(
-            Set<String> project, Map<String, Set<Integer>> skillExpertMap, GraphEmbedding gem){
+    public Map<String, Integer> buildEMBTeam( Set<String> project, Map<String, Set<Integer>> skillExpertMap, GraphEmbedding gem){
 
         Map<String, Integer> bestTeam = new HashMap<String, Integer>();
         double leastWeight = Double.MAX_VALUE;
@@ -53,6 +52,74 @@ public class SmallestEmbedding {
                     	                                
                             if (dist < shortestDistValue) { 		// find one who is the closest to team
                                 shortestDistValue = dist;
+                                bestExpert = expertId;
+                            }
+                    }
+                    //-----------------------------------------------
+
+                    if (bestExpert != -1) {
+                        team.put(skill, bestExpert);
+                           curTeamVec = addVec(curTeamVec,gem.embVec(bestExpert));
+                           weight += shortestDistValue;  			// add the shortest path to the team cast SUM                      
+                    }
+                }
+            }
+           
+            if(team.size() == project.size()){ // if the team is complete  check if it is better than the current teams?
+                if(weight < leastWeight) { //MIN
+                    leastWeight = weight;
+                    bestTeam = team;
+                }
+            }
+        }
+
+        return bestTeam;
+    }
+    
+    public Map<String, Integer> buildEMBTeam( Set<String> project, Map<String, Set<Integer>> skillExpertMap, GraphEmbedding gem, Set<Integer> usedIds){
+
+        Map<String, Integer> bestTeam = new HashMap<String, Integer>();
+        double leastWeight = Double.MAX_VALUE;
+
+        
+        String minSkill = null;
+        for (String skill : project){
+            
+        	if (minSkill == null ){
+                minSkill = skill;
+            }
+            
+        	if(skillExpertMap.get(skill).size() < skillExpertMap.get(minSkill).size()){
+                minSkill=skill;
+            }
+        
+        }
+        Set<Integer> potentialRootIdList = skillExpertMap.get(minSkill);
+
+        for (int rootId : potentialRootIdList) {
+
+            Map<String, Integer> team = new HashMap<String, Integer>();
+            
+            double weight = 0;
+            
+            team.put(minSkill, rootId);
+            double [] curTeamVec = gem.embVec(rootId);
+
+            for(String skill : project) { // all skills
+
+                if(!minSkill.equals(skill)) {
+                    //-----------------------------------------------
+                	double shortestDistValue = Double.MAX_EXPONENT;
+                    int bestExpert = -1;
+                    for (int expertId : skillExpertMap.get(skill)) { // for all candidates having this skill
+
+                         double [] canVec = gem.embVec(expertId);
+                    	 double dist = distance(canVec,curTeamVec);
+                    	        
+                    	 	// && (usedIds.contains(expertId) == false)
+                            if ((dist < shortestDistValue) && (usedIds.contains(expertId) == false)  ) { 		// find one who is the closest to team
+                                
+                            	shortestDistValue = dist;
                                 bestExpert = expertId;
                             }
                     }

@@ -14,15 +14,16 @@ public class GraphEmbedding {
 	
   
 	
-	public static void main(String[] args) {
+	public static void main() {
 		GraphEmbedding gem = new GraphEmbedding();
 		//gem.loadEmbedding("ppt",10,100);
 		//gem.loadTermNode("ppt");
 		
 		double [] d =gem.embVec(4);
 		
-		for (int i=0;i < d.length ; i++)
-			System.out.println(d[i]+"");
+		for (int i=0;i < d.length ; i++) {
+			System.out.println(d[i]+"");			
+		}
 
 	}
 	
@@ -71,6 +72,7 @@ public class GraphEmbedding {
 
 	public void loadEmbedding(String ds,int r, int d){ 
 		//String embFile = path +ds+"/"+ds+"-10-100.emb";
+		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		String embFile = path +ds+"/emb/"+ds+"-"+r+"-"+d+".emb";
 		System.out.print("Loading...."+ embFile);
 		

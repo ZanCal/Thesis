@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * Created by karga on 12/2/2017.
  */
-public class Hybrid {
+public class Hybrid extends TeamGenerationMethod {
 
     public Map<String, Integer> buildHybridTeam(
             Set<String> project, Map<String, Set<Integer>> skillExpertMap,
