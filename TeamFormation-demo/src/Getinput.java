@@ -157,19 +157,6 @@ public class Getinput extends HttpServlet {
 		Team team1D, team2D, team3D, team4D, team5D, team6D, team7D, team8D;
 		Team team1E, team2E, team3E, team4E, team5E, team6E, team7E, team8E;
 		
-		/*
-		String[] perfR = calPerf(hMap, teamR1A.expertIds);
-		String[] perfS = calPerf(hMap, teamS1A.expertIds);
-		String[] perfF = calPerf(hMap, teamF1A.expertIds);
-
-		request.setAttribute("perfR", perfR);
-		request.setAttribute("perfS", perfS);
-
-		request.setAttribute("perfF", perfF);
-		
-		request.setAttribute("skillName", team1A.skillName);
-		*/
-		
 		String[] performance1;
 		String[] performance2;
 		String[] performance3;
@@ -816,7 +803,7 @@ public class Getinput extends HttpServlet {
 		}
 		
 		
-		System.out.println(methodSelection);
+		//System.out.println(methodSelection);
 
 
 		

@@ -56,19 +56,19 @@ window.onload = function(){
 		switch(method){
 		case "s":
 			out.print("Shortest Path </h3>");
-			out.print("<p> Placeholder text describing how shortest path works </p>");
+			out.print("<p> Simply try to find experts with the smallest number of intermediary connections  </p>");
 			break;
 		case "r":
 			out.print("Random Walkers with Restarts </h3>");
-			out.print("<p> Placeholder text describing how Random Walkers with Restarts works </p>");
+			out.print("<p> Try to give connections between experts scores through Random Walkers with Restarts  </p>");
 			break;
 		case "f":
 			out.print("Fast Random Walkers with Restarts </h3>");
-			out.print("<p> Placeholder text describing how Fast Random Walkers with Restarts works </p>");
+			out.print("<p> A fast alternative to the normal Random Walkers with Restarts technique  </p>");
 			break;
 		case "e":
 			out.print("Embedding </h3>");
-			out.print("<p> Placeholder text describing how Embedding works </p>");
+			out.print("<p> Attempt to find experts by using the embedding technique  </p>");
 			break;
 		case "h":
 			out.print("Shortest Path and Random Walkers with Restarts Hybrid </h3>");

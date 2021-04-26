@@ -21,9 +21,9 @@ public class GraphEmbedding {
 		
 		double [] d =gem.embVec(4);
 		
-		for (int i=0;i < d.length ; i++) {
-			System.out.println(d[i]+"");			
-		}
+		//for (int i=0;i < d.length ; i++) {
+		//	System.out.println(d[i]+"");			
+		//}
 
 	}
 	
