@@ -121,9 +121,10 @@ public class RWR extends TeamGenerationMethod {
     }
 
     public DoubleMatrix2D buildMatrixM(double beta, String graphFile){
-    	System.out.println("Test");
-    	//System.out.println(graphFile);
-        DoubleMatrix2D M = null;
+		//if for whatever reason, this function has an error, it's because I may be using a hardcoded filepath commented in below 
+    	//C:\Users\johnn_000\Desktop\Uni\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\TeamFormation-demo\WEB-INF\datasets\SC_G1.txt
+		//i don't think it should be an issue, but i'm also not very confident in my codebase at the moment
+		DoubleMatrix2D M = null;
         Map<Integer,Set<Integer>> graphMap = new HashMap<Integer,Set<Integer>>();
 
         String sCurrentLine;
