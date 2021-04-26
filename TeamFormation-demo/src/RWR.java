@@ -121,7 +121,7 @@ public class RWR extends TeamGenerationMethod {
     }
 
     public DoubleMatrix2D buildMatrixM(double beta, String graphFile){
-
+    	System.out.println(graphFile);
         DoubleMatrix2D M = null;
         Map<Integer,Set<Integer>> graphMap = new HashMap<Integer,Set<Integer>>();
 
@@ -137,11 +137,14 @@ public class RWR extends TeamGenerationMethod {
 
                 Set<Integer> neighbors = new HashSet<Integer>();
 
+                System.out.println(ss);
                 for(int i=1; i<ss.length; i++){
                 	
                     //we assume the graph is unweighted and therefore ignore the weight
-                    String[] tt = ss[i].split("#");
-                    neighbors.add(Integer.parseInt(tt[0]));
+                	String[] tt = ss[i].split("#");
+                	neighbors.add(Integer.parseInt(tt[0]));
+                	
+                    
                 }
                 graphMap.put(nodeId, neighbors);
             }

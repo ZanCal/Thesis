@@ -176,9 +176,7 @@ public class Getinput extends HttpServlet {
 		String[] performance4;
 		String[] performance5;
 		switch(methodSelection) {
-		//see i thought that this would be nice and easy, but each team type has a different function with different args to generate teams 
-		//and i don't know if having them all be the same is easy. It'd be impossible without splitting RWR and FRWR into seperate classes 
-		//guess i'm having a really big switch thing for now. Maybe i'll come back and refactor this when i have free time to myself 
+		
 		case "s":
 			
 			teamGen = (ShortestPath) getServletContext().getAttribute("sp");

@@ -28,17 +28,12 @@ function plusButton(team, ids){
 		
 	}
 	
-	//document.getElementById(selfID).disabled = true;
 	$(self).addClass('selected');
 	
 	if(other.classList.contains('selected')){
 		other.classList.remove('selected');
 		score += 1;
 	}
-	//if(document.getElementById(otherID).disabled == true){
-	//	document.getElementById(otherID).disabled = false;
-	//	score += 1;
-	//}
 	team.innerHTML = score;
 
 	console.log(ids);
@@ -72,13 +67,6 @@ function minusButton(team, ids){
 		score -= 1;
 	}
 	
-	//document.getElementById(selfID).disabled = true;
-	
-	
-	//if(document.getElementById(otherID).disabled == true){
-	//	document.getElementById(otherID).disabled = false;
-	//	score -= 1;
-	//}
 	
 	team.innerHTML = score;
 	

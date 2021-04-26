@@ -131,8 +131,6 @@ function dis() {
 			</table>
 			<br>
 			<div style="text-align:center; width: 100%;">  
-			 <!--  button type="submit" class="button button2" value="true" name="loginbutt" > Discover Team</button-->
-			 <!--  lol butt -->								
 			  <input type='button' class="button button2" id = "mysub" value=' Discover Team'>
 			  											
 			</div>

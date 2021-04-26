@@ -29,7 +29,6 @@ public class Team {
 		skill2expertId = new String[bestTeam.size()];
 
 		for (Entry<String, Integer> pair : bestTeam.entrySet()){
-            //System.out.println(pair.getKey()+" "+pair.getValue());
             
             skillName[i] = pair.getKey();
             skill2expertId[i] = Integer.toString(pair.getValue()); 
@@ -60,7 +59,7 @@ public class Team {
 					}
 				}
 				//System.out.println("BFS valid visualization " + good);
-				System.out.println("BFS node length " + nodes.size());
+				//System.out.println("BFS node length " + nodes.size());
 				break;
 			case 1:
 				nodes= getlocalNodes(neighborMap);	// BFS
@@ -83,7 +82,7 @@ public class Team {
 					}
 				}
 				//System.out.println("Clique valid visualization " + good);
-				System.out.println("Clique node length " + nodes.size());
+				//System.out.println("Clique node length " + nodes.size());
 				break;
 			case 3: 
 				nodes = CreatExtSpGraph(twoHopMap,neighborMap); // Clique + Neighbor
@@ -107,8 +106,8 @@ public class Team {
 						good = false;
 					}
 				}
-				System.out.println("ManyPath valid visualization " + good);
-				System.out.println("ManyPath node length " + nodes.size());
+				//System.out.println("ManyPath valid visualization " + good);
+				//System.out.println("ManyPath node length " + nodes.size());
 				break;
 			case 5://Pruned ManyPath
 				nodes = getBestPaths(neighborMap, twoHopMap, finalScoreVector);
@@ -191,9 +190,6 @@ public class Team {
 	}
 	
 	public  void doSelectionSort(double [] arr, int [] idx){        
-	//why does this function exist?
-	//how poorly this code is documented 
-	//is making me want to not exist 
 		for (int i = 0; i < arr.length - 1; i++){
             int index = i;
             for (int j = i + 1; j < arr.length; j++) {            	
@@ -994,7 +990,6 @@ public class Team {
 	}
 	
 	public Set<Integer> getlocalNodes( Map<Integer, Set<Integer>> neighborMap){
-		//oh thank god, this is commented 
 		Map<Integer, Set<Integer>> visited = new HashMap<Integer, Set<Integer>>() ; // visited 
         LinkedList<Pair> queue = new LinkedList<Pair>(); // visited but waiting for neighbors to be visited 
         

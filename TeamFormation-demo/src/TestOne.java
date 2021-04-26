@@ -9,7 +9,6 @@ import cern.colt.matrix.DoubleMatrix2D;
  * Created by karga on 1/21/2019.
  */
 
-//I really don't think TestOne was supposed to be the final name for this class
 public  class TestOne {
 
     public static double MaxCalDouble = 100000; //what?
@@ -104,11 +103,6 @@ public  class TestOne {
     }
     
     public List<Integer> getFullPathTwoHopArray(Map<Integer, TwoHop[]> twoHopMap, int sId, int tId, List<Integer> currentList, int prevSId,int prevTId){
-    	//oh no it's recursive :(
-    	
-    	//what's S supposed to be versus T? 
-    	//is S start? Starting ID?
-    	//What algorithm is this supposed to implement? 
     	
         if(prevSId == sId && prevTId == tId){
             //what case is this covering? 
@@ -192,7 +186,7 @@ public  class TestOne {
     
     public int[] pathTwoHopArrayNewWeighted(Map<Integer, TwoHop[]> twoHopMap, int sId, int tId, DoubleMatrix2D finalScoreVector) {
     	//okay i have an idea. What i'm going to do is do a copy of pathTwoHopArrayNew, but instead of checking the distance
-    	//from the TwoHop thing (I still don't know what the fuck that is), i'm going to check scores from finalScoreVector
+    	//from the TwoHop thing, i'm going to check scores from finalScoreVector
     	
     	double resultScore = 0.0;
     	
@@ -294,7 +288,6 @@ public  class TestOne {
     }
 
     public List<Integer> insertOneElementBeforeGivenOne(List<Integer> inputList, int insertBeforeElement, int newElement){
-    	//nice function names, now if only I knew what it was supposed to do
         int newIndex = -1;
         for(int i=0; i<inputList.size(); i ++){
             if(inputList.get(i) == insertBeforeElement){

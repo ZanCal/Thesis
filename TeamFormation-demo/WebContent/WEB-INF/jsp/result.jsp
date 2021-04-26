@@ -85,8 +85,6 @@ window.onload = function(){
 		var viz = new Viz();
 		var myNetwork;
 		function genTeamDisplayLocal(id){
-			//i don't like this part
-			//figure out which network we need
 			switch(id.charAt(0)){
 			case '1':
 				switch(id.charAt(1)){
@@ -248,11 +246,9 @@ window.onload = function(){
 				var svg = viz.renderSVGElement(myNetwork)
 				.then(function(element) {
 					currElement.appendChild(element);
-					//document.getElementById('graph0').parentNode.width.baseVal.valueAsString = 800px;
 					
 				})
 				.catch(error => {
-					//currElement.appendChild(something);
 					console.log(error);
 					viz = new Viz();
 					let node = document.createElement("LI");
@@ -299,6 +295,7 @@ window.onload = function(){
 			
 		}
 		
+		//this is intentional for k > 3 cases
 		String[] performance1 = (String[]) request.getAttribute("performance1");
 		String[] performance2 = (String[]) request.getAttribute("performance1");
 		String[] performance3 = (String[]) request.getAttribute("performance1");
@@ -375,10 +372,12 @@ window.onload = function(){
 					<li id='tab3A' onclick="genTeamDisplayLocal(`3A`)"><a href="#3A">Clique</a></li>
 					<li id='tab4A' onclick="genTeamDisplayLocal(`4A`)"><a href="#4A">Clique+Neighbors</a></li>
 					<li id='tab5A' onclick="genTeamDisplayLocal(`5A`)"><a href="#5A">Weighted Path</a>
+					<!-- 
 					<li id='tab6A' onclick="genTeamDisplayLocal(`6A`)"><a href="#6A">Pruned Weighted Path</a>
 					<li id='tab7A' onclick="genTeamDisplayLocal(`7A`)"><a href="#7A">AK-Master Node</a>
 					<li id='tab8A' onclick="genTeamDisplayLocal(`8A`)"><a href="#8A">Improved Pruned BFS</a>
-				</ul>
+				 	-->
+				 </ul>
 				<div class='teamGraph' id="1A"></div>
 				<div class='teamGraph' id="2A"></div>
 				<div class='teamGraph' id="3A"></div>
@@ -444,9 +443,11 @@ window.onload = function(){
 					<li id='tab3B' onclick="genTeamDisplayLocal(`3B`)"><a href="#3B">Clique</a></li>
 					<li id='tab4B' onclick="genTeamDisplayLocal(`4B`)"><a href="#4B">Clique+Neighbors</a></li>
 					<li id='tab5B' onclick="genTeamDisplayLocal(`5B`)"><a href="#5B">Weighted Path</a>
+					<!-- 
 					<li id='tab6B' onclick="genTeamDisplayLocal(`6B`)"><a href="#6B">Pruned Weighted Path</a>
 					<li id='tab7B' onclick="genTeamDisplayLocal(`7B`)"><a href="#7B">AK-Master Node</a>
 					<li id='tab8B' onclick="genTeamDisplayLocal(`8B`)"><a href="#8B">Improved Pruned BFS</a>
+					 -->
 				</ul>
 				<div class='teamGraph' id="1B"></div>
 				<div class='teamGraph' id="2B"></div>
@@ -512,9 +513,11 @@ window.onload = function(){
 					<li id='tab3C' onclick="genTeamDisplayLocal(`3C`)"><a href="#3C">Clique</a></li>
 					<li id='tab4C' onclick="genTeamDisplayLocal(`4C`)"><a href="#4C">Clique+Neighbors</a></li>
 					<li id='tab5C' onclick="genTeamDisplayLocal(`5C`)"><a href="#5C">Weighted Path</a>
+					<!-- 
 					<li id='tab6C' onclick="genTeamDisplayLocal(`6C`)"><a href="#6C">Pruned Weighted Path</a>
 					<li id='tab7C' onclick="genTeamDisplayLocal(`7C`)"><a href="#7C">AK-Master Node</a>
 					<li id='tab8C' onclick="genTeamDisplayLocal(`8C`)"><a href="#8C">Improved Pruned BFS</a>
+					-->
 				</ul>
 				<div class='teamGraph' id="1C"></div>
 				<div class='teamGraph' id="2C"></div>
@@ -579,9 +582,11 @@ window.onload = function(){
 					<li id='tab3D' onclick="genTeamDisplayLocal(`3D`)"><a href="#3D">Clique</a></li>
 					<li id='tab4D' onclick="genTeamDisplayLocal(`4D`)"><a href="#4D">Clique+Neighbors</a></li>
 					<li id='tab5D' onclick="genTeamDisplayLocal(`5D`)"><a href="#5D">Weighted Path</a>
+					<!-- 
 					<li id='tab6D' onclick="genTeamDisplayLocal(`6D`)"><a href="#6D">Pruned Weighted Path</a>
 					<li id='tab7D' onclick="genTeamDisplayLocal(`7D`)"><a href="#7D">AK-Master Node</a>
 					<li id='tab8D' onclick="genTeamDisplayLocal(`8D`)"><a href="#8D">Improved Pruned BFS</a>
+					 -->
 				</ul>
 				<div class='teamGraph' id="1D"></div>
 				<div class='teamGraph' id="2D"></div>
@@ -646,9 +651,11 @@ window.onload = function(){
 					<li id = 'tab3E' onclick="genTeamDisplayLocal(`3E`)"><a href="#3E">Clique</a></li>
 					<li id = 'tab4E' onclick="genTeamDisplayLocal(`4E`)"><a href="#4E">Clique+Neighbors</a></li>
 					<li id = 'tab5E' onclick="genTeamDisplayLocal(`5E`)"><a href="#5E">Weighted Path</a>
+					<!-- 
 					<li id = 'tab6E' onclick="genTeamDisplayLocal(`6E`)"><a href="#6E">Pruned Weighted Path</a>
 					<li id = 'tab7E' onclick="genTeamDisplayLocal(`7E`)"><a href="#7E">AK-Master Node</a>
 					<li id = 'tab8E' onclick="genTeamDisplayLocal(`8E`)"><a href="#8E">Improved Pruned BFS</a>
+					 -->
 				</ul>
 				<div class='teamGraph' id="1E"></div>
 				<div class='teamGraph' id="2E"></div>

@@ -71,7 +71,7 @@ public class GraphEmbedding {
 		
 
 	public void loadEmbedding(String ds,int r, int d){ 
-		//String embFile = path +ds+"/"+ds+"-10-100.emb";
+
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		String embFile = path +ds+"/emb/"+ds+"-"+r+"-"+d+".emb";
 		System.out.print("Loading...."+ embFile);
